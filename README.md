@@ -28,7 +28,7 @@ add the urls you like to make available.
 
 A minimal example might be:
 
-~~~
+~~~puppet
 class{'approx'}
 
 approx::repository{'debian':
@@ -42,7 +42,7 @@ approx::repository{'debian-security':
 
 If you like to use hiera, you can define:
 
-~~~
+~~~yaml
 ---
 approx::config:
   debian:
@@ -50,6 +50,17 @@ approx::config:
   debian-security:
       url: 'http://security.debian.org/debian-security'
 ~~~
+
+To set the listening address and port as well as the maximum number of connections for the systemd socket, use:
+
+~~~puppet
+class { 'approx::systemd_socket':
+  listen_streams  => ['0.0.0.0:3142'],
+  max_connections => 128,
+}
+~~~
+
+(Requires module version with `max_connections` support.)
 
 ## Systemd
 Newer debian systems using systemd use a systemd socket to configure the listening port/ip.

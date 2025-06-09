@@ -20,6 +20,8 @@
 #  state of the service to ensure
 # @param service_enable
 #  if the service should be enabled or not
+# @param max_connections
+#   Optional. Sets the MaxConnections directive in the systemd socket unit.
 #
 class approx::systemd_socket (
   Optional[Array[String]] $listen_streams = undef,
@@ -27,6 +29,7 @@ class approx::systemd_socket (
   String[1]               $service_name   = 'approx.socket',
   String[1]               $service_ensure = 'running',
   Boolean                 $service_enable = true,
+  Optional[Integer]       $max_connections = undef,
 ) {
   if $listen_streams {
     systemd::dropin_file { 'approx.conf':
@@ -40,6 +43,9 @@ class approx::systemd_socket (
         ListenStream=<%= $v %> 
         <% } -%> 
         FreeBind=true
+        <% if $max_connections { -%>
+        MaxConnections=<%= $max_connections %>
+        <% } -%>
         |ENDTEMPLATE
       ),
     }
