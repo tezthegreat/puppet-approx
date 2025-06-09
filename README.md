@@ -28,7 +28,7 @@ add the urls you like to make available.
 
 A minimal example might be:
 
-~~~puppet
+~~~
 class{'approx'}
 
 approx::repository{'debian':
@@ -42,7 +42,7 @@ approx::repository{'debian-security':
 
 If you like to use hiera, you can define:
 
-~~~yaml
+~~~
 ---
 approx::config:
   debian:
